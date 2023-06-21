@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IRIAM トップバナーチャレンジ開始日出力ツール</title>
+  <script>
+    function calculateWeek() {
+      var selectedDate = new Date(document.getElementById("date").value);
+      var year = selectedDate.getFullYear();
+      var month = selectedDate.getMonth() + 1;
+      var day = selectedDate.getDate();
+
+      var week = calculateWeekNumber(year, month, day);
+      var output1 = document.getElementById("output1");
+      output1.textContent = "指定した日付の開催週は" + week + "週目です。";
+
+      var nextMonth = new Date(year, month - 1, 1);
+      nextMonth.setMonth(nextMonth.getMonth() + 1);
+      var tuesday = getNextMonthTuesday(nextMonth.getFullYear(), nextMonth.getMonth(), week);
+      var output2 = document.getElementById("output2");
+      output2.textContent = "あなたが参加するトップバナーチャレンジの期間は " + tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + tuesday.getDate()+" ～ "+tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + (tuesday.getDate()+6) +" です。" ;
+    }
+
+    function calculateWeekNumber(year, month, day) {
+      var weeks = [];
+      switch (month) {
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+          weeks = [0, 8, 16, 23, 30];
+          break;
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+          weeks = [0, 8, 16, 24, 31];
+          break;
+        case 2:
+          weeks = [0, 8, 14, 21, 28];
+          break;
+      }
+
+      var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if (isLeapYear(year)) {
+        daysInMonth[1] = 29;
+        weeks = [0, 9, 15, 22, 29];
+      }
+
+      var totalDays = day;
+
+      var week = 0;
+      for (var i = 0; i < weeks.length; i++) {
+        if (totalDays <= weeks[i]) {
+          week = i;
+          break;
+        }
+      }
+
+      return week;
+    }
+
+    function isLeapYear(year) {
+      return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    }
+
+    function getNextMonthTuesday(year, month, week) {
+      var date = new Date(year, month, 1);
+
+      // 指定週の最初の日を求める
+      var daysToAdd = (week) * 7 - date.getDay() + 2;
+      if (daysToAdd < 0) {
+        daysToAdd += 7;
+      }
+      date.setDate(date.getDate() + daysToAdd);
+
+      // 火曜日まで進める
+      while (date.getDay() !== 2) {
+        date.setDate(date.getDate() + 1);
+      }
+
+      return date;
+    }
+  </script>
+</head>
+<body>
+  <h1>IRIAM トップバナーチャレンジ開始日出力ツール</h1>
+  <label for="date">初配信日:</label>
+  <input type="date" id="date">
+  <button onclick="calculateWeek()">Calculate</button>
+  <p id="output1"></p>
+  <p id="output2"></p>
+</body>
+</html>
