@@ -58,7 +58,9 @@
       nextMonth.setMonth(nextMonth.getMonth() + 1);
       var tuesday = getNextMonthTuesday(nextMonth.getFullYear(), nextMonth.getMonth(), week);
       var output2 = document.getElementById("output2");
-      output2.textContent = "あなたが参加するトップバナーチャレンジの期間は " + tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + tuesday.getDate()+" ～ "+tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + (tuesday.getDate()+6) +" です。" ;
+      var endday = new Date(tuesday.getFullYear(), tuesday.getMonth(), tuesday.getDate()+6);
+      output2.textContent = "あなたが参加するトップバナーチャレンジの期間は " + 
+      tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + tuesday.getDate()+" ～ "+endday.getFullYear() + "/" + (endday.getMonth() + 1) + "/" + (endday.getDate()) +" です。" ;
     }
 
     function calculateWeekNumber(year, month, day) {
