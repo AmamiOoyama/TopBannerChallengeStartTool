@@ -123,7 +123,9 @@
       while (date.getDay() !== 2) {
         date.setDate(date.getDate() + 1);
       }
-
+if(date.getDate() === 8 || date.getDate() === 15|| date.getDate() ===  22|| date.getDate() === 29){
+date.setDate(date.getDate() - 7);
+}
       return date;
     }
   </script>
