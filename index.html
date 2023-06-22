@@ -45,6 +45,9 @@
   </style>
   <script>
     function calculateWeek() {
+	try {
+	if(document.getElementById("date").value === "")
+		return 
       var selectedDate = new Date(document.getElementById("date").value);
       var year = selectedDate.getFullYear();
       var month = selectedDate.getMonth() + 1;
@@ -61,6 +64,11 @@
       var endday = new Date(tuesday.getFullYear(), tuesday.getMonth(), tuesday.getDate()+6);
       output2.textContent = "あなたが参加するトップバナーチャレンジの期間は " + 
       tuesday.getFullYear() + "/" + (tuesday.getMonth() + 1) + "/" + tuesday.getDate()+" ～ "+endday.getFullYear() + "/" + (endday.getMonth() + 1) + "/" + (endday.getDate()) +" です。" ;
+        } 
+    catch ( e ) {
+        alert("Error: " + e );
+    }
+    
     }
 
     function calculateWeekNumber(year, month, day) {
